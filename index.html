@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Gilroy Regular;
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            background-color: #0D0F14;
+            color: white;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .box {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2vw;
+            border-radius: 15px;
+            gap: 20px;
+            background-color: #ffffff1f;
+        }
+
+        .effect {
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(190, 193, 234, 0.37);
+            backdrop-filter: blur(10.5px);
+            -webkit-backdrop-filter: blur(10.5px);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .imge {
+            border-radius: 50%;
+            height: 300px;
+            overflow: hidden;
+            width: 300px;
+        }
+
+        .imge img {
+            height: 100%;
+            width: 100%;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .btn>i {
+            padding: 10px;
+            border-radius: 50%;
+            background-color: white;
+            color: black;
+            font-size: 1.5vw;
+            transition: all ease 0.8s;
+            cursor: pointer;
+
+            &:hover {
+                background-color: black;
+                color: white;
+            }
+        }
+
+        .next {
+            font-size: 2vw;
+            cursor: pointer;
+        }
+
+        .prev {
+            font-size: 2vw;
+            cursor: pointer;
+        }
+
+        .anime {
+            animation: rotate 9s infinite linear;
+        }
+
+        @keyframes rotate {
+            to {
+                transform: rotate(360deg);
+            }
+
+            from {
+                transform: rotate(0deg);
+            }
+        }
+
+        @media screen and (max-width:600px) {
+            .box {
+                padding: 5vw;
+            }
+
+            .imge {
+                height: 250px;
+                width: 250px;
+            }
+
+            .btn {
+                gap: 10px;
+            }
+
+            .btn>i {
+                font-size: 5vw;
+            }
+
+            .next {
+                font-size: 6vw;
+            }
+
+            .prev {
+                font-size: 6vw;
+            }
+        }
+    </style>
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="box">
+        <div class="name">
+            <h1>Ek Din</h1>
+        </div>
+        <div class="artist">
+            <h1>Loka</h1>
+        </div>
+        <div class="imge">
+            <img src="https://imgs.search.brave.com/Hm3PdDxV84ajVw1XdgOvKfoU8bvB31cObMfSjVKjd4s/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9wYWdh/bG5ldy5jb20vY292/ZXJpbWFnZXMvQmFp/bC1QZS1Mb2thLVlh/aGEtSGFpLTUwMC01/MDAuanBn"
+                alt="Ek Din">
+        </div>
+        <audio src="EK_Din.mp3"></audio>
+        <div class="btn">
+            <div class="prev">
+                <i class="ri-skip-back-mini-fill"></i>
+            </div>
+            <i class="ri-play-fill"></i>
+            <div class="next">
+                <i class="ri-skip-forward-mini-fill"></i>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var text = document.querySelector(".artist h1")
+        var box = document.querySelector(".box")
+        var img = document.querySelector(".box .imge")
+        var immg=document.querySelector(".imge img")
+        var audio = document.querySelector("audio")
+        var plaay = document.querySelector(".btn> i")
+        var nxt = document.querySelector(".next i")
+        var bck = document.querySelector(".prev i")
+        var name_title = document.querySelector(".name h1")
+        var Isplaying = false
+
+        var songs = [{
+            name: "Blue Eyes",
+            artist: "Honey Singh",
+            music: "https://pagalworld.cool/files/download/id/1314",
+            img_src: "img4.webp"
+        },
+        {
+            name: "Nusta Paisa",
+            artist: "Mc Stan",
+            music: "https://pagalworld.cool/files/download/id/628",
+            img_src: "img3.webp"
+        }, {
+            name: "NO LOVE",
+            artist: "Emiway,loka",
+            music: "https://pagalfree.com/musics/128-No%20Love%20-%20Emiway%20Bantai%20128%20Kbps.mp3",
+            img_src: "img2.webp"
+        },
+        {
+            name: "Ek Din",
+            artist: "Loka",
+            music: "EK_Din.mp3",
+            img_src: "img1.webp"
+        }
+        ]
+
+        function plaaay() {
+            Isplaying = false
+            box.classList.add("effect")
+            audio.play()
+            img.classList.add("anime")
+            plaay.classList.replace("ri-play-fill", "ri-pause-fill")
+        }
+        function pauuse() {
+            Isplaying = true
+            audio.pause()
+            box.classList.remove("effect")
+            img.classList.remove("anime")
+            plaay.classList.replace("ri-pause-fill", "ri-play-fill")
+        }
+        plaay.addEventListener("click", () => {
+            if (Isplaying) {
+                plaaay()
+            } else {
+                pauuse()
+            }
+        })
+
+        const load = (songs) => {
+            text.textContent = songs.artist
+            name_title.textContent = songs.name
+            immg.src = songs.img_src
+            audio.src = songs.music
+        }
+
+        var songplay = 2
+        const nextSong = () => {
+            songplay = (songplay + 1) % songs.length
+            load(songs[songplay])
+            plaaay()
+        }
+        const pervousSong = () => {
+            songplay = (songplay - 1 + songs.length) % songs.length
+            load(songs[songplay])
+            plaaay()
+        }
+
+        nxt.addEventListener("click", nextSong)
+        bck.addEventListener("click", pervousSong)
+
+    </script>
+</body>
+
+</html>
